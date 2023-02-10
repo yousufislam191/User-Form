@@ -1,12 +1,10 @@
 import "./App.css";
-import { Typography } from "@material-ui/core";
+import Routess from "./routes";
 
 function App() {
   return (
     <div className="App">
-      <Typography variant="h2" component="h2">
-        Welcome to the MERN Signin Signup Authentication Authorization App
-      </Typography>
+      <Routess />
     </div>
   );
 }
