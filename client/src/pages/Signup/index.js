@@ -1,44 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Card,
-  IconButton,
   InputAdornment,
   TextField,
   Typography,
 } from "@material-ui/core";
-
-import "./index.css";
-import {
-  EmailRounded,
-  LockRounded,
-  Visibility,
-  VisibilityOff,
-} from "@material-ui/icons";
-import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { AccountCircle, EmailRounded, LockRounded } from "@material-ui/icons";
+import { useNavigate } from "react-router-dom";
 
-const SignIn = () => {
+const SignUp = () => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
 
   const userSchema = Yup.object({
+    name: Yup.string()
+      .required("Name is required")
+      .min(3, "Name is too short. Must be at least 3 characters long")
+      .max(50, "Name is too long!"),
     email: Yup.string()
       .required("Email address is required")
       .email("Invalid email address"),
     password: Yup.string()
       .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
+      .min(8, "Password is not secure. Must be at least 8 characters long")
+      .matches(/[a-z]+/, "Must have one lowercase character")
+      .matches(/[A-Z]+/, "Must have one uppercase character")
+      .matches(/[@$!%*#?&]+/, "Must have one special character")
+      .matches(/\d+/, "Must have one number"),
+    confirmPassword: Yup.string()
+      .required("Confirm Password is required")
+      .oneOf(
+        [Yup.ref("password"), null],
+        "Password & confirm password does not match"
+      ),
   });
 
   const formik = useFormik({
     initialValues: {
+      name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
     onSubmit: async (values, helpers) => {
       console.log(values);
@@ -54,10 +58,30 @@ const SignIn = () => {
   return (
     <div className="root">
       <Card className="form mb-3">
-        <Typography className="text-center mb-3" variant="h4" color="primary">
-          User Login
+        <Typography className="text-center mb-4" variant="h4" color="primary">
+          User Registration
         </Typography>
         <form onSubmit={formik.handleSubmit}>
+          <TextField
+            fullWidth
+            required
+            className="mb-3"
+            name="name"
+            type="text"
+            variant="outlined"
+            label="Name"
+            autocomplete="on"
+            error={formik.errors.name}
+            onChange={formik.handleChange}
+            helperText={formik.errors.name}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle color="primary" />
+                </InputAdornment>
+              ),
+            }}
+          />
           <TextField
             fullWidth
             required
@@ -81,9 +105,9 @@ const SignIn = () => {
           <TextField
             fullWidth
             required
-            className="mb-2"
+            className="mb-3"
             name="password"
-            type={showPassword ? "text" : "password"}
+            type="text"
             variant="outlined"
             label="Password"
             error={formik.errors.password}
@@ -95,49 +119,42 @@ const SignIn = () => {
                   <LockRounded color="primary" />
                 </InputAdornment>
               ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                  >
-                    {showPassword ? (
-                      <Visibility color="primary" />
-                    ) : (
-                      <VisibilityOff color="primary" />
-                    )}
-                  </IconButton>
+            }}
+          />
+          <TextField
+            fullWidth
+            required
+            className="mb-4"
+            name="confirmPassword"
+            type="text"
+            variant="outlined"
+            label="Confirm Password"
+            error={formik.errors.confirmPassword}
+            onChange={formik.handleChange}
+            helperText={formik.errors.confirmPassword}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockRounded color="primary" />
                 </InputAdornment>
               ),
             }}
           />
-          <Button
-            className="mb-4"
-            variant="text"
-            color="primary"
-            disableElevation
-            onClick={() => {
-              navigate("/forgot-password");
-            }}
-            style={{ backgroundColor: "transparent", textAlign: "left" }}
-          >
-            Forgot Password ?
-          </Button>
           <Button fullWidth variant="contained" color="primary" type="submit">
-            Sign in
+            Sign Up
           </Button>
         </form>
         <div className="text-center">
-          <Typography variant="overline">Don't have an account ?</Typography>
+          <Typography variant="overline">Have an account ?</Typography>
           <Button
             color="primary"
             disableElevation
             onClick={() => {
-              navigate("/signup");
+              navigate("/signin");
             }}
             style={{ backgroundColor: "transparent", textAlign: "left" }}
           >
-            Sign up
+            Sign in
           </Button>
         </div>
       </Card>
@@ -145,4 +162,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
