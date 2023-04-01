@@ -20,7 +20,7 @@ const createUser = async (req, res) => {
     // console.log(`"Accepted message: " ${info.accepted}`);
     if (info.accepted) {
       return res.status(200).send({
-        message: `"A verification email has been sent to this email "${email} .
+        message: `A verification email has been sent to this email ${email} .
         Verification email will be expire after 5 Minutes.`,
       });
     } else {
@@ -39,7 +39,7 @@ const createUser = async (req, res) => {
 
 // activated user and save user info in database
 const activateCreatedUser = async (req, res) => {
-  const { token } = req.body;
+  const token = req.query.token;
   if (token) {
     JWT.verify(
       token,
@@ -57,11 +57,8 @@ const activateCreatedUser = async (req, res) => {
         });
         try {
           newUser.save();
-          return res
-            .status(201)
-            .json([newUser, { message: "Activated your account." }]);
+          return res.status(201).json([{ message: "Activated your account." }]);
         } catch (error) {
-          // const errors = handleErrors(error);
           return res.status(500).send({
             message: error.message,
             // errors,

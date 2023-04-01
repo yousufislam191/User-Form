@@ -13,7 +13,7 @@ const { signUpValidator, signInValidator } = require("../middleware/userAuth");
 const router = require("express").Router();
 
 router.post("/signup", signUpValidator, validationHandler, createUser);
-router.post("/email-activate", activateCreatedUser);
+router.get("/email-activate", activateCreatedUser);
 router.post(
   "/signin",
   signInValidator,
