@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Button,
   Card,
@@ -41,18 +44,49 @@ const SignIn = () => {
       password: "",
     },
     onSubmit: async (values, helpers) => {
-      console.log(values);
-      try {
-        alert("form submitted");
-      } catch (error) {
-        helpers.setErrors({ submit: error.message });
+      // console.log(values);
+      const res = await axios
+        .post("http://localhost:5000/api/signin", {
+          email: values.email,
+          password: values.password,
+        })
+        .catch((err) => {
+          notify(err.response.status, err.response.data.message);
+          // console.log(err);
+        });
+      if (res) {
+        notify(res.status, res.data.message);
+        navigate("/dashboard");
       }
     },
     validationSchema: userSchema,
   });
+  const notify = (status, message) =>
+    status === 200
+      ? toast.success(message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        })
+      : toast.error(message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
 
   return (
     <div className="root">
+      <ToastContainer />
       <Card className="form mb-3">
         <Typography className="text-center mb-3" variant="h4" color="primary">
           User Login

@@ -5,6 +5,7 @@ import NotFoundPage from "../pages/NotFound";
 import Navbar from "../components/Header";
 import SignUp from "../pages/Signup";
 import ForgotPassword from "../pages/ForgotPass";
+import { Dashboard } from "@material-ui/icons";
 
 const Routess = () => {
   return (
@@ -16,6 +17,7 @@ const Routess = () => {
           <Route exact path="/signin" element={<SignIn />} />
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/forgot-password" element={<ForgotPassword />} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
