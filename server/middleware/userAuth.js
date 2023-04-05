@@ -53,26 +53,12 @@ const signInValidator = [
     .withMessage("Invalid email address")
     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
     .withMessage("Invalid email address"),
-  // .custom(async (value) => {
-  //   try {
-  //     const existingUser = await User.findOne({ email: value });
-  //     if (existingUser) {
-  //       throw createError("Email already exists!");
-  //     }
-  //   } catch (err) {
-  //     throw createError(err.message);
-  //   }
-  // }),
   check("password")
     .trim()
     .notEmpty()
     .withMessage("Password is missing")
     .isLength({ min: 8 })
     .withMessage("Invalid password"),
-  // .isStrongPassword()
-  // .withMessage(
-  //   "Password is not a strong. Must be one uppercase, lowercase, number and special characters"
-  // ),
 ];
 
 module.exports = { signUpValidator, signInValidator };

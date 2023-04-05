@@ -90,7 +90,7 @@ const SignUp = () => {
   return (
     <div className="root">
       <ToastContainer />
-      <Card className="form mb-3">
+      <Card className="form ms-auto me-auto">
         <Typography className="text-center mb-4" variant="h4" color="primary">
           User Registration
         </Typography>

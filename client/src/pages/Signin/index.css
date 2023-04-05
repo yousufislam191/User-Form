@@ -3,7 +3,7 @@
     height: 100vh;
     padding: 1rem;
     background-color: rgb(238, 238, 238);
-    display: grid;
+    /* display: grid; */
     place-items: center;
 }
 .form{

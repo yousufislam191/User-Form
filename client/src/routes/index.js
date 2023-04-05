@@ -5,7 +5,7 @@ import NotFoundPage from "../pages/NotFound";
 import Navbar from "../components/Header";
 import SignUp from "../pages/Signup";
 import ForgotPassword from "../pages/ForgotPass";
-import { Dashboard } from "@material-ui/icons";
+import Dashboard from "../pages/Dashboard";
 
 const Routess = () => {
   return (

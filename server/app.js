@@ -7,7 +7,7 @@ const userRouter = require("./routes/users.routes");
 const cookieParser = require("cookie-parser");
 
 const app = express();
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());

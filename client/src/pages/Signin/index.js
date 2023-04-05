@@ -87,7 +87,7 @@ const SignIn = () => {
   return (
     <div className="root">
       <ToastContainer />
-      <Card className="form mb-3">
+      <Card className="form ms-auto me-auto">
         <Typography className="text-center mb-3" variant="h4" color="primary">
           User Login
         </Typography>
@@ -100,7 +100,7 @@ const SignIn = () => {
             type="email"
             variant="outlined"
             label="Email"
-            autocomplete="on"
+            autoComplete="on"
             error={formik.errors.email}
             onChange={formik.handleChange}
             helperText={formik.errors.email}

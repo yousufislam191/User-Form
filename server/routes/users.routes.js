@@ -4,6 +4,7 @@ const {
   userSignInController,
   verifyToken,
   getUser,
+  refreshToken,
   updateUser,
   deleteUser,
 } = require("../controllers/users.controllers");
@@ -21,6 +22,7 @@ router.post(
   userSignInController
 );
 router.get("/user", verifyToken, getUser);
+router.get("/refresh", refreshToken, verifyToken, getUser);
 // router.get("/:id", getOneUser);
 // router.patch("/:id", updateUser);
 // router.delete("/:id", deleteUser);
