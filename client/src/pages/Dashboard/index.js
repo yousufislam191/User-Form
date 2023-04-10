@@ -37,6 +37,17 @@ const Dashboard = () => {
     const data = await res.data;
     return data;
   };
+
+  const sendLogoutRequest = async () => {
+    const res = await axios.get("http://localhost:5000/api/logout", {
+      withCredentials: true,
+    });
+    if (res.statusCode === 200) {
+      return res;
+    }
+    return new Error("Couldn't log out");
+  };
+
   useEffect(() => {
     if (firstRender) {
       firstRender = false;
@@ -62,6 +73,11 @@ const Dashboard = () => {
       });
     }
   };
+
+  const handleLogout = () => {
+    sendLogoutRequest().then((data) => console.log(data));
+  };
+
   return (
     <>
       <ToastContainer />
@@ -81,9 +97,11 @@ const Dashboard = () => {
               variant="contained"
               color="primary"
               type="submit"
-              onClick={() => {
-                navigate("/signin");
-              }}
+              // onClick={() => {
+              //   // navigate("/signin");
+              //   handleLogout();
+              // }}
+              onClick={handleLogout()}
             >
               Logout
             </Button>

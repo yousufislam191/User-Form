@@ -5,6 +5,7 @@ const {
   verifyToken,
   getUser,
   refreshToken,
+  logout,
   updateUser,
   deleteUser,
 } = require("../controllers/users.controllers");
@@ -23,6 +24,7 @@ router.post(
 );
 router.get("/user", verifyToken, getUser);
 router.get("/refresh", refreshToken, verifyToken, getUser);
+router.post("/logout", verifyToken, logout);
 // router.get("/:id", getOneUser);
 // router.patch("/:id", updateUser);
 // router.delete("/:id", deleteUser);

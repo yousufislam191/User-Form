@@ -187,6 +187,24 @@ const refreshToken = (req, res, next) => {
   });
 };
 
+// logout user
+const logout = (req, res, next) => {
+  const cookies = req.headers.cookie;
+  const previousToken = cookies.split("=")[2];
+
+  if (!previousToken) {
+    return res.status(400).json({ message: "Token not found" });
+  }
+  JWT.verify(String(previousToken), process.env.USER_LOGIN_KEY, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: "Authentication Failed" });
+    }
+    res.clearCookie(`${user.id}`);
+    req.cookies[`${user.id}`] = "";
+    return res.status(200).json({ message: "Successfully logged out" });
+  });
+};
+
 // const handleErrors = (err) => {
 //   // console.log(err.message, err.code);
 //   let errors = {};
@@ -233,4 +251,5 @@ module.exports = {
   verifyToken,
   getUser,
   refreshToken,
+  logout,
 };
